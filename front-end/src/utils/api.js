@@ -67,3 +67,88 @@ export async function listReservations(params, signal) {
     .then(formatReservationDate)
     .then(formatReservationTime);
 }
+
+// API call when creating a new reservation
+export async function createReservation(reservation, signal) {
+  const url = `${API_BASE_URL}/reservations`;
+  const options = {
+    method: "POST",
+    headers,
+    body: JSON.stringify({ data: reservation }),
+    signal,
+};
+return await fetchJson(url, options)
+}
+
+//Gets a specific reservation based on ID
+export async function readReservation(reservation_id, signal) {
+  const url = `${API_BASE_URL}/reservations/${reservation_id}`
+  return await fetchJson(url, {signal}, [])
+    .then(formatReservationDate)
+    .then(formatReservationTime)
+}
+
+//Updates a specific reservation with new info
+export async function updateReservation(reservation_id, params, signal) {
+  const url = (`${API_BASE_URL}/reservations/${reservation_id}`);
+  const options = {
+    method: "PUT",
+    headers,
+    body: JSON.stringify({ data: params }),
+    signal,
+  };
+  return await fetchJson(url, options);
+}
+
+//Changes reservation status to cancelled
+export async function cancelReservation(reservation_id, status, signal) {
+  const url = `${API_BASE_URL}/reservations/${reservation_id}/status`;
+  const options = {
+    method: "PUT",
+    headers,
+    body: JSON.stringify({data: { status: status } }),
+  };
+  return await fetchJson(url, options, { status })
+}
+
+// Creates new table for database
+export async function createTable(table, signal) {
+  const url = `${API_BASE_URL}/tables`;
+  table.capacity = Number(table.capacity);
+  const options = {
+    method: "POST",
+    headers,
+    body: JSON.stringify({ data: table }),
+    signal,
+  };
+  return await fetchJson(url, options, table);
+};
+
+// Lists all tables
+export async function listTables(signal) {
+  const url = `${API_BASE_URL}/tables`;
+  return await fetchJson(url, { headers, signal }, []);
+}
+
+//Updates table after sitting reservation
+export async function updateTable(table_id, reservationId, signal) {
+  const url = `${API_BASE_URL}/tables/${table_id}/seat`;
+  const options = {
+    method: "PUT",
+    headers,
+    body: JSON.stringify({ data: { reservation_id: reservationId } }),
+    signal
+  };
+  return await fetchJson(url, options);
+}
+
+// Frees up table when finished with delete
+export async function finishTable(table_id, signal) {
+  const url = `${API_BASE_URL}/tables/${table_id}/seat`;
+  const options = {
+    method: "DELETE",
+    headers,
+    signal,
+  };
+  return await fetchJson(url, options, {});
+}

@@ -15,10 +15,10 @@ function Layout() {
   return (
     <div className="container-fluid">
       <div className="row h-100">
-        <div className="col-md-2 side-bar">
+        <div className="col-md-2 side-bar bg-dark pt-4">
           <Menu />
         </div>
-        <div className="col">
+        <div className="col p-0">
           <Routes />
         </div>
       </div>

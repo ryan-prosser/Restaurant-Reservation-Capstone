@@ -1,4 +1,5 @@
 import React from "react"
+import { Link } from "react-router-dom/cjs/react-router-dom.min"
 import CancelReservationButton from "./CancelReservationButton"
 
 function ListReservations({reservations, loadBoth, setReservationsError}) {
@@ -28,9 +29,9 @@ if (reservations.length > 0) {
             </div>
             <div>
             {status === "booked" ? 
-            <a href={`/reservations/${reservation_id}/seat`}><button type="button" className="btn btn-info mr-2">Seat</button></a> : null}
+            <Link to={`/reservations/${reservation_id}/seat`}><button type="button" className="btn btn-info mr-2">Seat</button></Link> : null}
             {status === "booked" ? 
-            <a href={`/reservations/${reservation_id}/edit`}><button type="button" className="btn btn-secondary m-2">Edit</button></a> : null}
+            <Link to={`/reservations/${reservation_id}/edit`}><button type="button" className="btn btn-secondary m-2">Edit</button></Link> : null}
             {status === "booked" ? 
             <CancelReservationButton reservation_id={reservation_id} setReservationsError={setReservationsError} loadBoth={loadBoth} /> : null }
         </div> 

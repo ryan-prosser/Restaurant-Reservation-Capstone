@@ -33,7 +33,7 @@ return (
             id="mobile_number" 
             type="text"
             required={true} 
-            placeholder="XXX-XXX-XXXX"
+            placeholder="Mobile number"
             value={reservationInfo.mobile_number}
             onChange={changeHandler}
             className="form-control shadow border-info">

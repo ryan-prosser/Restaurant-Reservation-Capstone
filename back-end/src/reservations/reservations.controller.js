@@ -94,6 +94,16 @@ function notInPast(req, res, next) {
   }
 }
 
+function mobileNumberIsNumber(req, res, next) {
+  const {mobile_number} = req.body.data
+  const check = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/
+  if (!check.test(mobile_number)) {
+    next({status:400, message:"Please enter phone number in valid format; ex. 000-000-0000"})
+  } else {
+    next()
+  }
+}
+
 function peopleIsNumber(req, res, next) {
   const {people} = req.body.data
   if (!Number.isInteger(people)) {
@@ -174,6 +184,7 @@ module.exports = {
            hasProperty("first_name"),
            hasProperty("last_name"),
            hasProperty("mobile_number"),
+           mobileNumberIsNumber,
            hasProperty("reservation_date"),
            notOnTuesday,
            hasProperty("reservation_time"),

@@ -1,156 +1,61 @@
 # Capstone: Restaurant Reservation System
 
-> You have been hired as a full stack developer at _Periodic Tables_, a startup that is creating a reservation system for fine dining restaurants.
-> The software is used only by restaurant personnel when a customer calls to request a reservation.
-> At this point, the customers will not access the system online.
+This restaurant reservation system, named Period Tables, is my final capstone project for the Chegg Skills (Thinkful) Software Engineering Program. I created a full-stack application within a monorepo so that restaurants can create, view, edit, seat, search, or cancel reservations at their restaurant. I combined all of the JavaScript skills I had been honing throughout this course to showcase my abilities in this final project.
 
-There are no user stories for deployment: it is expected that you will deploy the application to production after you finish a user story.
+I implemented 8 different previously defined user stories. The instructions for those stories are included at the bottom of this file. Each user story passed a series of front-end and back-end testing, as well as error handling to ensure proper use of the application. Migrations and seedings were handled using Knex while in the development and testing phase.
 
-There are no user stories for logging: it is expected that you will add logging to the application with enough detail to help you diagnose issues in production.
+You can view the final deployed application [here](https://restaurant-reservation-capstone-frontend-b34d.onrender.com)!
 
-## Existing files
+## Languages, Frameworks, and Technologies used
 
-This repository is set up as a *monorepo*, meaning that the frontend and backend projects are in one repository. This allows you to open both projects in the same editor.
+- JavaScript
+- React
+- Bootstrap
+- Express
+- Node.js
+- Knex
+- DBeaver
+- Elephant SQL
 
-As you work through the user stories listed later in this document, you will be writing code that allows your frontend and backend applications to talk to each other. You will also write code to allow your controllers and services to connect to, and query, your PostgreSQL database via [Knex](http://knexjs.org/).
+## Project Features
 
-The table below describes the folders in this starter repository:
+### Dashboard
 
-| Folder/file path | Description                                                      |
-| ---------------- | ---------------------------------------------------------------- |
-| `./back-end`     | The backend project, which runs on `localhost:5001` by default.  |
-| `./front-end`    | The frontend project, which runs on `localhost:3000` by default. |
+The dashboard is used at the home page for the application. This is where the user can view the current reservations for the selected day, the tables at the restaurant, as well as the menu bar to reach all other features of the application. If there are no reservations for the selected day, a message "No Reservations Found" will be displayed.
 
-This starter code closely follows the best practices and patterns established in the Robust Server Structure module.
+The reservations cards on the dashboard show all of the reservation information provided by customers as well as the current status. If the status is set to booked, the edit, seat, and cancel button are displayed on the reservation card.
 
-**Note**: Please do not submit a pull request to this repository with your solution.
+The table cards on the dashboard show the table name, table capacity, and the current status of the table. The table is set to "free" by deafult but will show "occupied" and a finish button if a reservation is currently seated at the table.
 
-### Backend Existing files
+### Create Reservation
 
-The `./back-end` folder contains all the code for the backend project.
+The create reservation feature allows users to create a reservation with customer information attached to it. The input fields are first name, last name, mobile number, date of reservation, time of reservation, and party size. All fields are required and if one is left out or violates any entry validation then an error message appears at the top of the page showing the related error. Clicking cancel takes you back to the previous page and clicking submit sends a POST request and takes you back to the dashboard on the day of the reservation that was just created.
 
-The table below describes the existing files in the `./back-end` folder:
+### Create Table
 
-| Folder/file path                                         | Description                                                                                                         |
-| -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| `./back-end/knexfile.js`                                 | The Knex configuration file. You will not need to make changes to this file.                                        |
-| `./back-end/src/app.js`                                  | Defines the Express application and connects routers.                                                               |
-| `./back-end/src/db/connection.js`                        | The Knex connection file. You will not need to make changes to this file.                                           |
-| `./back-end/src/db/migrations`                           | The Knex migrations folder.                                                                                         |
-| `./back-end/src/db/seeds/`                               | The Knex seeds folder.                                                                                              |
-| `./back-end/src/errors/errorHandler.js`                  | Defined an Express API error handler.                                                                               |
-| `./back-end/src/errors/notFound.js`                      | Defined an Express API "not found" handler.                                                                         |
-| `./back-end/src/reservations/reservations.controller.js` | A controller for the reservations resource.                                                                         |
-| `./back-end/src/reservations/reservations.router.js`     | A router for the reservations resource.                                                                             |
-| `./back-end/src/server.js`                               | Defines the node server.                                                                                            |
-| `./back-end/test`                                        | A folder that contains all of the integration tests. You will not need to make changes to the files in this folder. |
-| `./back-end/vercel.json`                                 | A vercel deployment configuration file. You will not need to make changes to this file.                             |
+The create table feature allows users to create new tables to be added to the available tables in the restaurant. The input fields are table name, and capacity. Both fields are required and must meet validation requirements or an error message will appear at the top displaying the error. Clicking cancel takes you back to the previous page and clicking submit will send a POST request and take you back to the dashboard.
 
-### Frontend Existing files
+### Search
 
-The `./front-end` folder contains all the code for the frontend project.
+The search feature allows the user to search for reservations by phone number. The input accepts multiple phone number formats and will even show reservations if a partial phone number is provided. After clicking find, the page will display all reservations, including past reservations, that have a booked, seated, or cancelled reservation status. From there the user cna interact with the reservation just as they can from the dashboard. If no reservations match the phone number provided, a message will display saying "No Reservations Found".
 
-The table below describes the existing files in the `./front-end` folder:
+### Edit Reservation
 
-| Folder/file path                                   | Description                                                                                            |
-| -------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| `./front-end/e2e`                                  | Contains all of the end-to-end tests. You will not need to make changes to the files in this folder.   |
-| `./front-end/jest-puppeteer.config.js`             | A configuration file used by the end-to-end tests. You will not need to make changes to this file.     |
-| `./front-end/src/App.js`                           | Defines the root application component. You will not need to make changes to this file.                |
-| `./front-end/src/App.test.js`                      | Contains the tests for the root application component. You will not need to make changes to this file. |
-| `./front-end/src/dashboard/Dashboard.js`           | Defines the Dashboard page.                                                                            |
-| `./front-end/src/index.js`                         | The main entry point for the React application.                                                        |
-| `./front-end/src/layout/ErrorAlert.js`             | Defines an error alert component that display only when an error is specified.                         |
-| `./front-end/src/layout/Layout.css`                | The css for the Layout component.                                                                      |
-| `./front-end/src/layout/Layout.js`                 | Defines the main layout of the application.                                                            |
-| `./front-end/src/layout/Menu.js`                   | Defines the menu for the application.                                                                  |
-| `./front-end/src/layout/NotFound.js`               | Defines the "Not found" component that is displayed when no route matches.                             |
-| `./front-end/src/layout/Routes.js`                 | Defines all the routes for the application.                                                            |
-| `./front-end/src/utils/api.js`                     | Defines the functions used to access the backend API                                                   |
-| `./front-end/src/utils/date-time.js`               | Defines functions to format date and time strings.                                                     |
-| `./front-end/src/utils/format-reservation-date.js` | Defines a function to format the date on a single reservation or an array of reservations.             |
-| `./front-end/src/utils/format-reservation-time.js` | Defines a function to format the time on a single reservation or an array of reservations.             |
-| `./front-end/src/utils/useQuery.js`                | Defines a custom hook to parse the query parameters from the URL.                                      |
+The edit reservation feature allows users to edit an existing reservation. This page is accessed by clicking the "edit" button on a reservation card and can only be accessed if the reservation status is set to "booked". The feature uses the same form as the create reservation feature but will show all existing information filled in already. Clicking the cancel button will bring the user back to the previous page and clicking submit will send a PUT request after going through the same validation process as when a new reservation is created and take you back to the dashboard.
 
-## Database setup
+### Seating Reservation
 
-1. Set up four new ElephantSQL database instances - development, test, preview, and production - by following the instructions in the "PostgreSQL: Creating & Deleting Databases" checkpoint.
-1. After setting up your database instances, connect DBeaver to your new database instances by following the instructions in the "PostgreSQL: Installing DBeaver" checkpoint.
+The seat reservation feature allows user to seat a reservation at an available table in the restaurant. The page displays important reservation information and a drop down selection with all table names and capacities. Clicking cancel will bring you back to the previous page. After selecting a table and clicking submit, the application will check to make sure the table has the capacity to fit the selected reservation and take you back to the dashboard page. Here you will see that the reservation status has been changed to "seated" and the table status has been changed to "occupied".
 
-### Knex
+### Finish Seated Reservation
 
-Run `npx knex` commands from within the `back-end` folder, which is where the `knexfile.js` file is located.
+The finish reservation feature allows users to clear a reservation when the party has left. The table will display the "finish" button when it has a reservation seated at it and if clicked will display a confirmation message asking "Is this table ready to seat new guests? This cannot be undone.". If cancel is clicked on this message, nothing happens but if OK is clicked, the table status will be changed to "free" and the reservation status will be changed to finished" and not be displayed on the dashboard anymore.
 
-## Installation
+### Cancel Reservation
 
-1. Fork and clone this repository.
-1. Run `cp ./back-end/.env.sample ./back-end/.env`.
-1. Update the `./back-end/.env` file with the connection URL's to your ElephantSQL database instance.
-1. Run `cp ./front-end/.env.sample ./front-end/.env`.
-1. You should not need to make changes to the `./front-end/.env` file unless you want to connect to a backend at a location other than `http://localhost:5001`.
-1. Run `npm install` to install project dependencies.
-1. Run `npm run start:dev` to start your server in development mode.
+The cancel reservation feature allows users to cancel an existing reservation if needed. When a reservation has the status of "booked" one of the three buttons shown will be cancel. If the cancel button is pressed a confirmation message will pop up asking "Do you want to cancel this reservation? This cannot be undone.". If cancel is  clicked, nothing happens but if OK is clicked the reservation status of the reservation will be changed to "cancelled" but will still be displayed on the dashboard. All buttons will also be removed from the reservation card.
 
-If you have trouble getting the server to run, reach out for assistance.
-
-## Running tests
-
-This project has unit, integration, and end-to-end (e2e) tests. You have seen unit and integration tests in previous projects.
-End-to-end tests use browser automation to interact with the application just like the user does.
-Once the tests are passing for a given user story, you have implemented the necessary functionality.
-
-Test are split up by user story. You can run the tests for a given user story by running:
-
-`npm run test:X` where `X` is the user story number.
-
-Have a look at the following examples:
-
-- `npm run test:1` runs all the tests for user story 1 (both frontend and backend).
-- `npm run test:3:backend` runs only the backend tests for user story 3.
-- `npm run test:3:frontend` runs only the frontend tests for user story 3.
-
-Whenever possible, frontend tests will run before backend tests to help you follow outside-in development.
-
-> **Note** When running `npm run test:X` If the frontend tests fail, the tests will stop before running the backend tests. Remember, you can always run `npm run test:X:backend` or `npm run test:X:frontend` to target a specific part of the application.
-
-Since tests take time to run, you might want to consider running only the tests for the user story you're working on at any given time.
-
-Once you have all user stories complete, you can run all the tests using the following commands:
-
-- `npm test` runs _all_ tests.
-- `npm run test:backend` runs _all_ backend tests.
-- `npm run test:frontend` runs _all_ frontend tests.
-- `npm run test:e2e` runs only the end-to-end tests.
-
-If you would like a reminder of which npm scripts are available, run `npm run` to see a list of available commands.
-
-Note that the logging level for the backend is set to `warn` when running tests and `info` otherwise.
-
-> **Note**: After running `npm test`, `npm run test:X`, or `npm run test:e2e` you might see something like the following in the output: `[start:frontend] Assertion failed:`. This is not a failure, it is just the frontend project getting shutdown automatically.
-
-> **Note**: If you are getting a `unable to resolve dependency tree` error when running the frontend tests, run the following command: `npm install --force --prefix front-end`. This will allow you to run the frontend tests.
-
-> **Hint**: If you stop the tests before they finish, it can leave the test database in an unusual state causing the tests to fail unexpectedly the next time you run them. If this happens, delete all tables in the test database, including the `knex_*` tables, and try the tests again.
-
-### Frontend test timeout failure
-
-Running the frontend tests on a resource constrained computer may result in timeout failures.
-
-If you believe your implementation is correct, but needs a bit more time to finish, you can update the `testTimeout` value in `front-end/e2e/jest.config.js`. A value of 10000 or even 12000 will give each test a few more seconds to complete.
-
-#### Screenshots
-
-To help you better understand what might be happening during the end-to-end tests, screenshots are taken at various points in the test.
-
-The screenshots are saved in `front-end/.screenshots` and you can review them after running the end-to-end tests.
-
-You can use the screenshots to debug your code by rendering additional information on the screen.
-
-## Product Backlog
-
-The Product Manager has already created the user stories for _Periodic Tables_. Each of the user stories is listed below, and your Product Manager wants them to be implemented in the order in which they are listed. Another developer has already written the tests for each of the user stories so that you don't have to.
-
-Although the user stories do not say anything about deployment, you should consider deploying early and often. You may even decide to deploy before adding any features. We recommend that you use Render to deploy this project.
+## User Story Instructions/Criteria
 
 ### US-01 Create and list reservations
 
@@ -178,48 +83,6 @@ so that I know how many customers will arrive at the restaurant on a given day.
 1. The `/reservations` API will have the same validations as above and will return 400, along with an informative error message, when a validation error happens.
    - seed the reservations table with the data contained in `./back-end/src/db/seeds/00-reservations.json`
 
-> **Hint** Dates and times in JavaScript and databases can be challenging.
->
-> The users have confirmed that they will be using Chrome to access the site. This means you can use `<input type="date" />` and `<input type="time" />`, which are supported by Chrome but may not work in other browsers.
->
-> `<input type="date" />` will store the date in `YYYY-MM-DD` format. This is a format that works well with the PostgreSQL `date` data type.
->
-> `<input type="time" />` will store the time in `HH:MM:SS` format. This is a format that works well with the PostgreSQL `time` data type.
->
-> **Optional** If you want to add support to other browsers such as Safari or IE, you can use the pattern and placeholder attributes along with the date and time inputs in your form. For the date input you can use `<input type="date" placeholder="YYYY-MM-DD" pattern="\d{4}-\d{2}-\d{2}"/>`, and for the time input you can use `<input type="time" placeholder="HH:MM" pattern="[0-9]{2}:[0-9]{2}"/>`. You can read more about handling browser support [here](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date#handling_browser_support).
->
-> You can assume that all dates and times will be in your local time zone.
-
-> **Hint** In the backend code, be sure to wrap any async controller functions in an `asyncErrorBoundary` call to ensure errors in async code are property handled.
-
-In `back-end/src/errors/asyncErrorBoundary.js`
-
-```javascript
-function asyncErrorBoundary(delegate, defaultStatus) {
-  return (request, response, next) => {
-    Promise.resolve()
-      .then(() => delegate(request, response, next))
-      .catch((error = {}) => {
-        const { status = defaultStatus, message = error } = error;
-        next({
-          status,
-          message,
-        });
-      });
-  };
-}
-
-module.exports = asyncErrorBoundary;
-```
-
-Use in controllers as part of `module.exports`. For example:
-
-```javascript
-module.exports = {
-	create: asyncErrorBoundary(create)
-}
-```
-
 ### US-02 Create reservation on a future, working date
 
 As a restaurant manager<br/>
@@ -232,17 +95,6 @@ so that users do not accidentally create a reservation for days when we are clos
    - The reservation date is a Tuesday as the restaurant is closed on Tuesdays.
    - The reservation date is in the past. Only future reservations are allowed.
 1. The `/reservations` API will have the same validations as above and will return 400, along with an informative error message, when a validation error happens.
-
-> **Hint** There may be more than one validation error on the page at time.
->
-> For example, a reservation in the past on a Tuesday violates both rules, so the page should display two errors within a single `className="alert alert-danger"`
->
-> However, the API validation does not need to include multiple validation error messages.
-> You can run the validation in any order and report only one validation error at a time, and the tests will pass.
->
-> Also, parsing a date in YYYY-MM-DD format using the built-in Date class assumes the date is a UTC date. UTC is a time standard that is the basis for civil time and time zones worldwide, but it is NOT a timezone. As a result, keep an eye out for how your dates are interpreted by the Date class.
->
-> While there is nothing preventing you from using a third party library to handle dates for your project, you are encouraged to use the built-in Date class.
 
 ### US-03 Create reservation within eligible timeframe
 
@@ -257,8 +109,6 @@ so that users do not accidentally create a reservation for a time we cannot acco
    - The reservation time is after 9:30 PM, because the restaurant closes at 10:30 PM and the customer needs to have time to enjoy their meal.
    - The reservation date and time combination is in the past. Only future reservations are allowed. E.g., if it is noon, only allow reservations starting _after_ noon today.
 1. The `/reservations` API will have the same validations as above and will return 400, along with an informative error message, when a validation error happens.
-
-> **Hint** Parsing a Date that includes the time in JavaScript can be tricky. Again, keep an eye out for which time zone is being used for your Dates.
 
 ### US-04 Seat reservation
 
@@ -297,15 +147,6 @@ so that I know which tables are occupied and free.
    - `#1` & `#2`, each with a capacity of 6.
 1. The `/tables` API will have the same validations as above and will return 400, along with an informative error message, when a validation error happens.
 
-- if the table capacity is less than the number of people in the reservation, return 400 with an error message.
-- if the table is occupied, return 400 with an error message.
-
-> **Hint** Work through the acceptance criteria in the order listed, step-by-step. A different order may be more challenging.
-
-> **Hint** Seed the `tables` table in a similar way as it's done with the `reservations` table.
-
-> **Hint** Add a `reservation_id` column in the `tables` table. Use the `.references()` and `inTable()` knex functions to add the foreign key reference.
-
 ### US-05 Finish an occupied table
 
 As a restaurant manager<br/>
@@ -319,8 +160,6 @@ so that I can seat new guests at that table.<br/>
    - the "Finish" button must have a `data-table-id-finish={table.table_id}` attribute, so it can be found by the tests.
    - Clicking the "Finish" button will display the following confirmation: "Is this table ready to seat new guests? This cannot be undone." If the user selects "Ok" the system will: - Send a `DELETE` request to `/tables/:table_id/seat` in order to remove the table assignment. The tests do not check the body returned by this request. - The server should return 400 if the table is not occupied. - Refresh the list of tables to show that the table is now available.
    - Clicking the "Cancel" makes no changes.
-
-> **Hint** The end-to-end test waits for the tables list to be refreshed before checking the free/occupied status of the table, so be sure to send a GET request to `/tables` to refresh the tables list.
 
 ### US-06 Reservation Status
 
@@ -338,10 +177,6 @@ so that I can see which reservation parties are seated, and finished reservation
    - clicking the Finish button associated with the table changes the reservation status to "finished" and removes the reservation from the dashboard.
    - to set the status, PUT to `/reservations/:reservation_id/status` with a body of `{data: { status: "<new-status>" } }` where `<new-status>` is one of booked, seated, or finished. Please note that this is only tested in the back-end for now.
 
-> **Hint** You can add a field to a table in a migration `up` method by defining a new column. E.g. `table.string("last_name", null).notNullable();` will create a new last_name column.  Be sure to remove the column in the `down` function using `dropColumn()`. E.g. `table.dropColumn("last_name");`
-
-> **Hint** Use [`Knex.transaction()`](http://knexjs.org/#Transactions) to make sure the `tables` and `reservations` records are always in sync with each other.
-
 ### US-07 Search for a reservation by phone number
 
 As a restaurant manager<br/>
@@ -357,22 +192,6 @@ so that I can quickly access a customer's reservation when they call about their
      - then the system will look for the reservation(s) in the database and display all matched records on the `/search` page using the same reservations list component as the `/dashboard` page.
      - the search page will display all reservations matching the phone number, regardless of status.
    - display `No reservations found` if there are no records found after clicking the Find button.
-
-> **Hint** To search for a partial or complete phone number, you should ignore all formatting and search only for the digits.
-> You will need to remove any non-numeric characters from the submitted mobile number and also use the PostgreSQL translate function.
->
-> The following function will perform the correct search.
->
-> ```javascript
-> function search(mobile_number) {
->   return knex("reservations")
->     .whereRaw(
->       "translate(mobile_number, '() -', '') like ?",
->       `%${mobile_number.replace(/\D/g, "")}%`
->     )
->     .orderBy("reservation_date");
-> }
-> ```
 
 ### US-08 Change an existing reservation
 
@@ -396,5 +215,3 @@ so that reservations are accurate and current.
    - Only reservations with a status of "booked" can be edited.
    - Clicking the "Submit" button will save the reservation, then displays the previous page.
    - Clicking "Cancel" makes no changes, then display the previous page.
-
-> **Hint** The same validation used for create applies to editing a reservation. The form and the API for updating a reservation must not allow the user to violate any of the rules specified when creating a reservation.

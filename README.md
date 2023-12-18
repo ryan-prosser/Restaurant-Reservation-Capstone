@@ -27,33 +27,50 @@ The reservations cards on the dashboard show all of the reservation information 
 
 The table cards on the dashboard show the table name, table capacity, and the current status of the table. The table is set to "free" by deafult but will show "occupied" and a finish button if a reservation is currently seated at the table.
 
+![Dashboard](https://github.com/ryan-prosser/Restaurant-Reservation-Capstone/assets/133927475/6b73391f-4a92-4759-a3b7-4158e53e2f50)
+
 ### Create Reservation
 
 The create reservation feature allows users to create a reservation with customer information attached to it. The input fields are first name, last name, mobile number, date of reservation, time of reservation, and party size. All fields are required and if one is left out or violates any entry validation then an error message appears at the top of the page showing the related error. Clicking cancel takes you back to the previous page and clicking submit sends a POST request and takes you back to the dashboard on the day of the reservation that was just created.
+
+![Create Reservation](https://github.com/ryan-prosser/Restaurant-Reservation-Capstone/assets/133927475/c0ac7c31-71c8-4209-a1b7-cb2a0fe0db0a)
 
 ### Create Table
 
 The create table feature allows users to create new tables to be added to the available tables in the restaurant. The input fields are table name, and capacity. Both fields are required and must meet validation requirements or an error message will appear at the top displaying the error. Clicking cancel takes you back to the previous page and clicking submit will send a POST request and take you back to the dashboard.
 
+![Create New Table](https://github.com/ryan-prosser/Restaurant-Reservation-Capstone/assets/133927475/6fd48f7c-7cb5-442e-8e2d-567b44c31b7f)
+
 ### Search
 
 The search feature allows the user to search for reservations by phone number. The input accepts multiple phone number formats and will even show reservations if a partial phone number is provided. After clicking find, the page will display all reservations, including past reservations, that have a booked, seated, or cancelled reservation status. From there the user cna interact with the reservation just as they can from the dashboard. If no reservations match the phone number provided, a message will display saying "No Reservations Found".
+
+![Search Function](https://github.com/ryan-prosser/Restaurant-Reservation-Capstone/assets/133927475/24bcd751-448f-4723-a6a0-11d6cd5fdcb9)
 
 ### Edit Reservation
 
 The edit reservation feature allows users to edit an existing reservation. This page is accessed by clicking the "edit" button on a reservation card and can only be accessed if the reservation status is set to "booked". The feature uses the same form as the create reservation feature but will show all existing information filled in already. Clicking the cancel button will bring the user back to the previous page and clicking submit will send a PUT request after going through the same validation process as when a new reservation is created and take you back to the dashboard.
 
+![Search Function](https://github.com/ryan-prosser/Restaurant-Reservation-Capstone/assets/133927475/bdecd400-559b-4cea-b906-86034902a713)
+
 ### Seating Reservation
 
 The seat reservation feature allows user to seat a reservation at an available table in the restaurant. The page displays important reservation information and a drop down selection with all table names and capacities. Clicking cancel will bring you back to the previous page. After selecting a table and clicking submit, the application will check to make sure the table has the capacity to fit the selected reservation and take you back to the dashboard page. Here you will see that the reservation status has been changed to "seated" and the table status has been changed to "occupied".
+
+![Seating Reservation](https://github.com/ryan-prosser/Restaurant-Reservation-Capstone/assets/133927475/a999950a-b346-4631-98b0-504da0879f07)
 
 ### Finish Seated Reservation
 
 The finish reservation feature allows users to clear a reservation when the party has left. The table will display the "finish" button when it has a reservation seated at it and if clicked will display a confirmation message asking "Is this table ready to seat new guests? This cannot be undone.". If cancel is clicked on this message, nothing happens but if OK is clicked, the table status will be changed to "free" and the reservation status will be changed to finished" and not be displayed on the dashboard anymore.
 
+![Finish Seated Table](https://github.com/ryan-prosser/Restaurant-Reservation-Capstone/assets/133927475/3f7a0dcd-4cbb-41ce-9d8d-f9fa8c53d600)
+
 ### Cancel Reservation
 
 The cancel reservation feature allows users to cancel an existing reservation if needed. When a reservation has the status of "booked" one of the three buttons shown will be cancel. If the cancel button is pressed a confirmation message will pop up asking "Do you want to cancel this reservation? This cannot be undone.". If cancel is  clicked, nothing happens but if OK is clicked the reservation status of the reservation will be changed to "cancelled" but will still be displayed on the dashboard. All buttons will also be removed from the reservation card.
+
+![Cancelling Reservation](https://github.com/ryan-prosser/Restaurant-Reservation-Capstone/assets/133927475/8fcae9aa-4f12-4f77-af2c-ca2161c6fd77)
+![Cancelled](https://github.com/ryan-prosser/Restaurant-Reservation-Capstone/assets/133927475/8a7233d0-227c-427d-9eb5-5f64b74c60dd)
 
 ## User Story Instructions/Criteria
 
